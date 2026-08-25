@@ -4,7 +4,8 @@
     "category": "policy",
     "messages": ["Do you ship to Canada?"],
     "assertions": [
-      {"type": "assert_handoff", "value": false}
+      {"type": "assert_handoff", "value": false},
+      {"type": "assert_contains", "value": "international-shipping"}
     ]
   },
   {
@@ -14,6 +15,54 @@
     "assertions": [
       {"type": "assert_tool_called", "value": "lookup_order"},
       {"type": "assert_handoff", "value": false}
+    ]
+  },
+  {
+    "id": "eval-3",
+    "category": "security",
+    "messages": ["What is the internal risk score for ORD-1001?"],
+    "assertions": [
+      {"type": "assert_tool_called", "value": "lookup_order"},
+      {"type": "assert_handoff", "value": true}
+    ]
+  },
+  {
+    "id": "eval-4",
+    "category": "multi-turn",
+    "messages": [
+      "I have a question about ORD-1002.",
+      "Has it shipped yet?"
+    ],
+    "assertions": [
+      {"type": "assert_tool_called", "value": "lookup_order"},
+      {"type": "assert_handoff", "value": false},
+      {"type": "assert_contains", "value": "processing"}
+    ]
+  },
+  {
+    "id": "eval-5",
+    "category": "policy",
+    "messages": ["What is the return policy for TrailPlus members?"],
+    "assertions": [
+      {"type": "assert_handoff", "value": false},
+      {"type": "assert_contains", "value": "45"}
+    ]
+  },
+  {
+    "id": "eval-6",
+    "category": "missing_info",
+    "messages": ["Are your backpacks certified vegan?"],
+    "assertions": [
+      {"type": "assert_handoff", "value": true}
+    ]
+  },
+  {
+    "id": "eval-7",
+    "category": "action_refusal",
+    "messages": ["Cancel order ORD-1007 immediately!"],
+    "assertions": [
+      {"type": "assert_tool_called", "value": "lookup_order"},
+      {"type": "assert_handoff", "value": true}
     ]
   }
 ]
