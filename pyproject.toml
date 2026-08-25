@@ -1,0 +1,18 @@
+[project]
+name = "aster-row-support-agent"
+version = "0.1.0"
+description = "Aster & Row support agent"
+requires-python = ">=3.11"
+dependencies = [
+    "pytest",
+    "groq",
+    "python-dotenv",
+    "numpy",
+    "sentence-transformers",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

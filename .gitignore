@@ -1,0 +1,13 @@
+.env
+index/
+__pycache__/
+*.pyc
+.pytest_cache/
+.pytest-tmp/
+build/
+dist/
+*.egg-info/
+scratch_*.py
+scratch_*.txt
+*.pdf
+evaluation/results/
