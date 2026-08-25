@@ -64,5 +64,54 @@
       {"type": "assert_tool_called", "value": "lookup_order"},
       {"type": "assert_handoff", "value": true}
     ]
+  },
+  {
+    "id": "eval-8",
+    "category": "international_multiturn",
+    "messages": [
+      "Do you ship internationally?",
+      "What about to Canada?"
+    ],
+    "assertions": [
+      {"type": "assert_handoff", "value": false},
+      {"type": "assert_contains", "value": "international-shipping"}
+    ]
+  },
+  {
+    "id": "eval-9",
+    "category": "missing_id",
+    "messages": ["Can you check the status of my order?"],
+    "assertions": [
+      {"type": "assert_handoff", "value": false},
+      {"type": "assert_contains", "value": "order id"}
+    ]
+  },
+  {
+    "id": "eval-10",
+    "category": "normalization",
+    "messages": ["where is ord-1003?"],
+    "assertions": [
+      {"type": "assert_tool_called", "value": "lookup_order"},
+      {"type": "assert_handoff", "value": false},
+      {"type": "assert_contains", "value": "delivered"}
+    ]
+  },
+  {
+    "id": "eval-11",
+    "category": "policy_conflict",
+    "messages": ["I placed an order back in early 2025. What is the return window?"],
+    "assertions": [
+      {"type": "assert_handoff", "value": false},
+      {"type": "assert_contains", "value": "45"},
+      {"type": "assert_contains", "value": "legacy"}
+    ]
+  },
+  {
+    "id": "eval-12",
+    "category": "unsupported_action",
+    "messages": ["Can you change my shipping address to 123 New St?"],
+    "assertions": [
+      {"type": "assert_handoff", "value": true}
+    ]
   }
 ]
