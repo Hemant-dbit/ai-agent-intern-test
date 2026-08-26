@@ -1,0 +1,5 @@
+pytest
+groq
+python-dotenv
+numpy
+sentence-transformers
