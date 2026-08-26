@@ -34,7 +34,8 @@ def main():
             continue
             
         with open(case_file, "r") as f:
-            cases = json.load(f)
+            data = json.load(f)
+            cases = data.get("cases", []) if isinstance(data, dict) else data
             
         for case in cases:
             # We use a fresh session ID for each case
@@ -42,20 +43,22 @@ def main():
             case_id = case.get("id", "unknown")
             category = case.get("category", "unknown")
             messages = case.get("messages", [])
-            assertions = case.get("assertions", [])
             
             # Reset session store for this ID
             session_store._sessions.pop(session_id, None)
             
             # Send messages (could be multi-turn)
             final_resp = None
-            for msg in messages:
-                final_resp = handle_message(session_id, msg)
+            for msg_dict in messages:
+                # msg_dict is {"role": "user", "content": "..."} in the original schema
+                content = msg_dict.get("content", "")
+                final_resp = handle_message(session_id, content)
                 
             if not final_resp:
                 continue
                 
-            passed, fails = evaluate_assertions(final_resp, assertions, final_resp.tools_called)
+            expect = case.get("expect", {})
+            passed, fails = evaluate_assertions(final_resp, expect, final_resp.tools_called)
             
             if category not in category_stats:
                 category_stats[category] = {"total": 0, "passed": 0}

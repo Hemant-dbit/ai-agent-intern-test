@@ -18,6 +18,7 @@ class OrderLookupResult:
     membership_tier: str | None
     return_window_days: int | None
     return_policy_source: str | None
+    carrier: str | None
 
 
 def sanitize(raw: dict[str, Any] | None, requested_id: str) -> OrderLookupResult:
@@ -34,7 +35,8 @@ def sanitize(raw: dict[str, Any] | None, requested_id: str) -> OrderLookupResult
             placed_at=None,
             membership_tier=None,
             return_window_days=None,
-            return_policy_source=None
+            return_policy_source=None,
+            carrier=None
         )
 
     # Use allowlist explicitly.
@@ -68,7 +70,8 @@ def sanitize(raw: dict[str, Any] | None, requested_id: str) -> OrderLookupResult
         placed_at=raw.get("placed_at"),
         membership_tier=raw.get("membership_tier"),
         return_window_days=None,  # placeholder before resolution
-        return_policy_source=None # placeholder
+        return_policy_source=None, # placeholder
+        carrier=raw.get("carrier")
     )
     
     window = resolve_return_window(res)

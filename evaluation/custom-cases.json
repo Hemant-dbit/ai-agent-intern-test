@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "purpose": "Custom cases added by candidate.",
+  "instructions": [],
+  "cases": [
+    {
+      "id": "custom-multi-turn-order",
+      "category": "conversation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I have a question about ORD-1002."
+        },
+        {
+          "role": "user",
+          "content": "Has it shipped yet?"
+        }
+      ],
+      "expect": {
+        "must_include": [
+          "processing"
+        ],
+        "tool": "order_lookup",
+        "handoff": false
+      }
+    },
+    {
+      "id": "custom-action-refusal",
+      "category": "action-refusal",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Cancel order ORD-1007 immediately!"
+        }
+      ],
+      "expect": {
+        "must_include": [
+          "shipped"
+        ],
+        "must_not_invent": [
+          "cancelled",
+          "refunded"
+        ],
+        "tool": "order_lookup",
+        "handoff": true
+      }
+    },
+    {
+      "id": "custom-normalization",
+      "category": "tool-use",
+      "messages": [
+        {
+          "role": "user",
+          "content": "where is ord-1003?"
+        }
+      ],
+      "expect": {
+        "must_include": [
+          "shipped"
+        ],
+        "tool": "order_lookup",
+        "handoff": false
+      }
+    },
+    {
+      "id": "custom-policy-conflict",
+      "category": "source-conflict",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What was the standard return window for orders placed in early 2025?"
+        }
+      ],
+      "expect": {
+        "must_include": [
+          "45"
+        ],
+        "tool": "not_called",
+        "handoff": false
+      }
+    },
+    {
+      "id": "custom-unsupported-action",
+      "category": "abstention",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Can you change my shipping address to 123 New St?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "order id"
+        ],
+        "must_not_invent": [
+          "address updated"
+        ],
+        "tool": "not_called_without_id",
+        "handoff": true
+      }
+    }
+  ]
+}
