@@ -17,7 +17,7 @@ An enterprise-grade, grounded customer support RAG agent built for Aster & Row. 
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/aster-row-support-agent.git
+git clone https://github.com/Hemant-dbit/ai-agent-intern-test.git
 cd aster-row-support-agent
 
 # Create and activate virtual environment
